@@ -6,4 +6,8 @@ class Patient(BaseModel):
     age: int
     gender: str
     diagnosis: str
-    
+
+class User(BaseModel):
+    name: str
+    email: str
+    password: str
