@@ -1,9 +1,10 @@
 from fastapi import FastAPI
+from . import models
+from .database import engine
+from .router import patient
 
 app = FastAPI()
 
+models.Base.metadata.create_all(engine)
 
-#homepage
-@app.get("/")
-def index():
-    return {"Data": "Welcome to the Homepage"}
+app.include_router(patient.router)
