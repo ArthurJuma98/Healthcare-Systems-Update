@@ -19,3 +19,8 @@ def all_patients(db: Session=Depends(get_db)):
 router.post("create-patient")
 def create_patient(request: schemas.Patient, db: Session=Depends(get_db)):
     return patient.create(request, db)
+
+#get patient by id
+router.get("get-by-id/{id}", response_model=schemas.ShowPatient)
+def get_by_id(id: int, db: Session=Depends(get_db)):
+    return patient.patient_id(id, db)

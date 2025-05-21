@@ -1,3 +1,4 @@
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from .. import models, schemas
 
@@ -13,3 +14,10 @@ def create(db: Session, request: schemas.Patient):
     db.refresh(new_patient)
 
     return new_patient
+
+def patient_id(id: int, db: Session):
+    patient = db.query(models.Patient).filter(models.Patient.id == id).first()
+
+    if not patient:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Patient with the id: {id} not found!")
+    return patient
