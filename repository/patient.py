@@ -36,3 +36,13 @@ def update(id: int, request: schemas.Patient, db: Session):
     db.commit()
 
     return {"message": "Patient record updated successfully"}
+
+def remove(id: int, db: Session):
+    patient = db.query(models.Patient).filter(models.Patient.id == id)
+
+    if not patient.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Patient with the id: {id} not found!")
+    
+    patient.delete(synchronize_session=False)
+    db.commit()
+    return {"Message": "Patient record deleted sucessfully"}

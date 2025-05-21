@@ -29,3 +29,8 @@ def get_by_id(id: int, db: Session=Depends(get_db)):
 router.put("update-patient/{id}", status_code=status.HTTP_202_ACCEPTED)
 def update_patient(id: int, request: schemas.Patient, db: Session=Depends(get_db)):
     return patient.update(id, request, db)
+
+#delete patient record
+router.delete("delete-record/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_record(id: int, db: Session=Depends(get_db)):
+    return patient.remove(id, db)
